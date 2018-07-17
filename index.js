@@ -11,21 +11,27 @@ const app = express()
 // Middleware
 app.use(cors())
 
-// Set configuration
+// Load project configuration
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-// Get youtube captions via video id
-app.get('/captions', async (req, res) => {
+// Returns captions clustered by timestamp (one timestamp can have
+// multiple possible captions) as JSON
+app.get('/api/v1/captions', async (req, res) => {
   const { id, target } = req.query
-
   if (!id) {
-    return res.status(422).send('No video id was provided.')
+    return res.status(422).json({ error: 'No video id was provided.' })
   }
-  // TEST ID: iigDXgdKkuI
+
   try {
     const unfilteredCaptions = await captionService.getCaptions(id)
+
+    // Handle possible errors
+    if (unfilteredCaptions.error) {
+      const { error, status } = unfilteredCaptions
+      return res.status(status).json({ error })
+    }
 
     // Filter captions and sort them by timestamp
     const matchingCaptions = unfilteredCaptions.filter(({ captions }) => {
@@ -43,10 +49,10 @@ app.get('/captions', async (req, res) => {
       return moment(a.timestamp, 'hh:mm:ss.SSZ').valueOf() - moment(b.timestamp, 'hh:mm:ss.SSZ').valueOf()
     })
 
-    return res.json(matchingCaptions)
+    return res.status(200).json(matchingCaptions)
   } catch (e) {
     console.error('error', e)
-    return res.status(422).send('Error fetching captions.')
+    return res.status(422).send({ error: 'Error fetching captions.' })
   }
 })
 

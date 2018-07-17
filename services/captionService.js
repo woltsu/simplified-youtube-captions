@@ -17,8 +17,8 @@ const authenticate = async () => {
     ],
   }
   if (credentials) {
-    authConfig['credentials'] = credentials
-    console.log("CREDENTIALS", credentials)
+    authConfig['credentials'] = JSON.parse(credentials)
+    console.log("CREDENTIALS", JSON.parse(credentials))
   }
   const auth = await google.auth.getClient({
     ...authConfig

@@ -8,12 +8,14 @@ const CAPTION_TEXT_URL = 'https://www.googleapis.com/youtube/v3/captions/'
 let token = null
 
 // Authenticate into google services
+let credentials = process.env.GOOGLE_CREDENTIALS
 const authenticate = async () => {
   const auth = await google.auth.getClient({
     scopes: [
       'https://www.googleapis.com/auth/youtube.force-ssl',
       'https://www.googleapis.com/auth/youtubepartner',
-    ]
+    ],
+    credentials: credentials
   })
   accessToken = await auth.getAccessToken()
   token = accessToken.token

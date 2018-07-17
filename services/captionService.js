@@ -43,7 +43,6 @@ const getCaptions = async (videoId) => {
     const caption = await axios.get(`${CAPTION_TEXT_URL}${id}?&tlang=en&key=${process.env.API_KEY}`, options)
     const captionAsString = String.fromCharCode.apply(null, new Uint16Array(caption.data))
     captions += captionAsString
-    console.log('id', id)
   }
   const clusteredCaptions = {}
   

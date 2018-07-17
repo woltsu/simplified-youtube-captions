@@ -11,8 +11,10 @@ const app = express()
 // Middleware
 app.use(cors())
 
-// Local configuration
-require('dotenv').config()
+// Set configuration
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 // Get youtube captions via video id
 app.get('/captions', async (req, res) => {

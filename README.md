@@ -42,4 +42,14 @@ Part of response:
     ]
   }
 ]
-```
+```  
+#### Local usage:  
+1. Clone project
+2. Run `npm install` in the project folder
+3. Follow instructions [here](https://cloud.google.com/docs/authentication/production) on how do create a service account and get a credentials.json file locally
+4. Follow instructions [here](https://developers.google.com/youtube/v3/getting-started) on how to get a personal api key for YouTube Data API v3
+5. Create a file called .env to project root
+6. Add two environmental variables into that file:
+   * `GOOGLE_APPLICATION_CREDENTIALS="PATH_TO_THE_DOWNLOADED_CREDENTIALS_FILE"`
+   * `API_KEY="YOUTUBE_API_KEY"`
+7. Run `npm run watch` for development mode or `npm start` for production mode

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
-    "watch": "NODE_ENV=development nodemon"
+    "watch": "NODE_ENV=development node_modules/nodemon/bin/nodemon.js index.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +16,8 @@
     "express": "^4.16.3",
     "googleapis": "^32.0.0",
     "moment": "^2.22.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
   }
 }
